@@ -1,27 +1,10 @@
-# OpenStick OS
+# OpenStick platform
 
-The OpenStick device image: a signed, A/B-updatable Linux on a Debian userland with a (near-)mainline kernel, booting straight into the 10-foot launcher.
+How OpenStick's open layer is integrated into the partner's certified Android TV platform.
 
-Status: v0 prototype. The build system is not chosen yet ([decision 0003](https://github.com/opensticktv/openstick/blob/main/decisions/0003-image-build-system.md)); `recipes/` is empty until it is.
+OpenStick runs on a certified Android TV / Google TV platform supplied by a manufacturing partner ([decision 0008](https://github.com/opensticktv/openstick/blob/main/decisions/0008-certified-base-open-layer.md)). The bootloader, Android core, DRM and Google services are the partner's and Google's, and are locked so 4K streaming works. This repo holds what OpenStick controls:
 
-## Layout
+- `docs/system-apps.md`: the OpenStick apps preinstalled on the device and the privileges each needs
+- Partner integration notes and requirements (added once a partner is chosen)
 
-| Path | Contents |
-| --- | --- |
-| `boards/` | One folder per board: kernel config fragment, device tree, patches, bootloader notes, test results |
-| `overlay/` | Files copied into every image (systemd units, compositor config, defaults) |
-| `recipes/` | Image build recipes (debos or mkosi) |
-| `docs/` | Partition layout, first-run flow, recovery |
-
-## Boards
-
-| Board | Role | Status |
-| --- | --- | --- |
-| [orangepi-zero2w](boards/orangepi-zero2w/) | v0 prototype | Out-of-tree HDMI and Cedrus patches needed |
-| [cm5-tvstick](boards/cm5-tvstick/) | v1 candidate (compact stick, no 4K YouTube) | Spike |
-| [rk3588](boards/rk3588/) | v1 candidate (4K native playback) | Spike |
-| [x86-n100](boards/x86-n100/) | v1 candidate (4K native and in Chrome) | Spike |
-
-## Components in the image
-
-cage (Wayland kiosk compositor), PipeWire, GStreamer and ffmpeg with v4l2-request or VA-API, Kodi, Flatpak, BlueZ, libCEC, RAUC, FCast receiver, UxPlay, MiracleCast (experimental), DLNA renderer, `openstickd`, the launcher. Google Chrome is **not** in the image; it is installed on first run into the `vendor` partition ([decision 0002](https://github.com/opensticktv/openstick/blob/main/decisions/0002-google-chrome-for-web-apps.md)).
+The earlier plan for a fully open Linux image is in the history of this repo and in [PRD.open-linux-edition.md](https://github.com/opensticktv/openstick/blob/main/docs/PRD.open-linux-edition.md).
